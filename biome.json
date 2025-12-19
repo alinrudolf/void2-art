@@ -46,7 +46,8 @@
         "recommended": true
       },
       "style": {
-        "recommended": true
+        "recommended": true,
+        "useImportType": "off"
       },
       "suspicious": {
         "recommended": true,
