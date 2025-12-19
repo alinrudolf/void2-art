@@ -1,6 +1,6 @@
 import type { HeadFC, PageProps } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import React from "react";
+import type React from "react";
 
 const functionalityPoints = [
   "The mannequin will beg for tokens when visitors are registered in its proximity and display a QR code that will redirect the visitor to a payment website for the LLM model.",

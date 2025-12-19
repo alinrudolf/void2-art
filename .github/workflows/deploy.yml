@@ -34,8 +34,6 @@ jobs:
 
       - name: Build site
         run: npm run build
-        env:
-          PATH_PREFIX: ${{ github.event.repository.name }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
