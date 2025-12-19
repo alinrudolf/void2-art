@@ -1,0 +1,35 @@
+/* [project]/src/app/conneqt_824f7afb.module.css [app-client] (css) */
+@font-face {
+  font-family: conneqt;
+  src: url("../media/Conneqt Regular-s.p.d56e4685.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: conneqt;
+  src: url("../media/Conneqt Bold-s.p.0d3dea1e.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: conneqt Fallback;
+  src: local(Arial);
+  ascent-override: 66.9%;
+  descent-override: 16.06%;
+  line-gap-override: 0.0%;
+  size-adjust: 150.07%;
+}
+
+.conneqt_824f7afb-module__CkJ76q__className {
+  font-family: conneqt, conneqt Fallback;
+}
+
+.conneqt_824f7afb-module__CkJ76q__variable {
+  --font-conneqt: "conneqt", "conneqt Fallback";
+}
+
+/*# sourceMappingURL=src_app_conneqt_824f7afb_module_css_bad6b30c._.single.css.map*/

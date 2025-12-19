@@ -1,0 +1,20 @@
+{
+  "app": {
+    "[project]/src/app/page": [
+      "static/media/Conneqt Regular-s.p.d56e4685.ttf",
+      "static/media/Conneqt Bold-s.p.0d3dea1e.ttf",
+      "static/media/AdvercaseFont_Demo_Regular-s.p.26422758.otf",
+      "static/media/AdvercaseFont_Demo_Bold-s.p.101d31b9.otf",
+      "static/media/IBMPlexMono_Thin-s.p.3a0a75f6.ttf",
+      "static/media/IBMPlexMono_ExtraLight-s.p.ff02381a.ttf",
+      "static/media/IBMPlexMono_Light-s.p.ff3a5146.ttf",
+      "static/media/IBMPlexMono_Regular-s.p.1ab486e7.ttf",
+      "static/media/IBMPlexMono_Medium-s.p.b3f139b0.ttf",
+      "static/media/IBMPlexMono_SemiBold-s.p.56101d2a.ttf",
+      "static/media/IBMPlexMono_Bold-s.p.a7f601fb.ttf"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

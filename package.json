@@ -1,0 +1,36 @@
+{
+  "name": "void-presentation-website",
+  "private": true,
+  "version": "2.0.0",
+  "description": "VOID presentation site rebuilt on Gatsby",
+  "scripts": {
+    "dev": "gatsby develop",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "type-check": "tsc --noEmit",
+    "biome:check": "biome check --write .",
+    "biome:ci": "biome ci .",
+    "biome:format": "biome format --write .",
+    "biome:lint": "biome lint --write .",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.0.0",
+    "gatsby": "^5.13.4",
+    "gatsby-plugin-image": "^3.13.4",
+    "gatsby-plugin-sharp": "^5.13.4",
+    "gatsby-source-filesystem": "^5.13.4",
+    "gatsby-transformer-sharp": "^5.13.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.10",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "husky": "^9.1.7",
+    "typescript": "^5.6.3"
+  }
+}

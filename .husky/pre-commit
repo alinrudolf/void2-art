@@ -1,0 +1,2 @@
+npm run biome:check
+npm run type-check

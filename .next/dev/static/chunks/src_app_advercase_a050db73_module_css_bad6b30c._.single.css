@@ -1,0 +1,35 @@
+/* [project]/src/app/advercase_a050db73.module.css [app-client] (css) */
+@font-face {
+  font-family: advercase;
+  src: url("../media/AdvercaseFont_Demo_Regular-s.p.26422758.otf") format("opentype");
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: advercase;
+  src: url("../media/AdvercaseFont_Demo_Bold-s.p.101d31b9.otf") format("opentype");
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: advercase Fallback;
+  src: local(Arial);
+  ascent-override: 96.3%;
+  descent-override: 23.59%;
+  line-gap-override: 0.0%;
+  size-adjust: 103.85%;
+}
+
+.advercase_a050db73-module__cZps6q__className {
+  font-family: advercase, advercase Fallback;
+}
+
+.advercase_a050db73-module__cZps6q__variable {
+  --font-advercase: "advercase", "advercase Fallback";
+}
+
+/*# sourceMappingURL=src_app_advercase_a050db73_module_css_bad6b30c._.single.css.map*/

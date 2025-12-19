@@ -1,0 +1,75 @@
+/* [project]/src/app/plexmono_1399410f.module.css [app-client] (css) */
+@font-face {
+  font-family: plexMono;
+  src: url("../media/IBMPlexMono_Thin-s.p.3a0a75f6.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: plexMono;
+  src: url("../media/IBMPlexMono_ExtraLight-s.p.ff02381a.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: plexMono;
+  src: url("../media/IBMPlexMono_Light-s.p.ff3a5146.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: plexMono;
+  src: url("../media/IBMPlexMono_Regular-s.p.1ab486e7.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: plexMono;
+  src: url("../media/IBMPlexMono_Medium-s.p.b3f139b0.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: plexMono;
+  src: url("../media/IBMPlexMono_SemiBold-s.p.56101d2a.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: plexMono;
+  src: url("../media/IBMPlexMono_Bold-s.p.a7f601fb.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: plexMono Fallback;
+  src: local(Arial);
+  ascent-override: 77.95%;
+  descent-override: 20.91%;
+  line-gap-override: 0.0%;
+  size-adjust: 131.49%;
+}
+
+.plexmono_1399410f-module__z-O9ZG__className {
+  font-family: plexMono, plexMono Fallback;
+}
+
+.plexmono_1399410f-module__z-O9ZG__variable {
+  --font-plex-mono: "plexMono", "plexMono Fallback";
+}
+
+/*# sourceMappingURL=src_app_plexmono_1399410f_module_css_bad6b30c._.single.css.map*/
