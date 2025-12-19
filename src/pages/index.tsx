@@ -30,7 +30,7 @@ const trackPlatforms = [
     icon: "/img/linkedin-logo.svg",
     description: "Professional network for careers",
     linkLabel: "www.linkedin.com",
-    href: "https://www.linkedin.com",
+    href: "https://www.linkedin.com/company/void2-0/",
   },
   {
     name: "YouTube",
@@ -123,14 +123,6 @@ const IndexPage: React.FC<PageProps> = () => {
               </section>
             </div>
 
-            <section className="panel panel-top-border" aria-labelledby="influences-title">
-              <h2 id="influences-title" className="panel-subtitle">
-                Influences
-              </h2>
-              <p className="panel-text">{influencesCopy}</p>
-              <p className="panel-text">{influencesLastSentence}</p>
-            </section>
-
             <section className="panel panel-top-border track-panel" aria-labelledby="track-title">
               <h2 id="track-title" className="panel-subtitle">
                 Track Us
@@ -158,7 +150,12 @@ const IndexPage: React.FC<PageProps> = () => {
                         </td>
                         <td className="track-desc">{platform.description}</td>
                         <td className="track-link-cell">
-                          <a className="track-link" href={platform.href}>
+                          <a
+                            className="track-link"
+                            href={platform.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
                             {platform.linkLabel}
                           </a>
                         </td>
@@ -167,6 +164,14 @@ const IndexPage: React.FC<PageProps> = () => {
                   </tbody>
                 </table>
               </div>
+            </section>
+
+            <section className="panel panel-top-border" aria-labelledby="influences-title">
+              <h2 id="influences-title" className="panel-subtitle">
+                Influences
+              </h2>
+              <p className="panel-text">{influencesCopy}</p>
+              <p className="panel-text">{influencesLastSentence}</p>
             </section>
 
             <section className="panel cta is-hidden" aria-labelledby="cta-title">
