@@ -14,7 +14,7 @@ const newsItems = [
     href: "https://www.linkedin.com/posts/prow-conference_empathy-over-attention-thats-the-ugcPost-7389617699309563904-mZSZ",
   },
   { label: "Version 1.0 on builds.gg", href: "https://builds.gg/builds/vo-d-36899" },
-  { label: "VOID at Artverse Paris", href: "#" },
+  { label: "VOID at Artverse Paris", href: "#", hidden: true },
 ];
 
 const trackPlatforms = [
@@ -40,7 +40,7 @@ const trackPlatforms = [
     href: "https://www.youtube.com",
   },
   {
-    name: "X",
+    name: "/'eks/",
     icon: "/img/x-logo.svg",
     description: "Used to be Twitter",
     linkLabel: "www.x.com",
@@ -64,7 +64,7 @@ const IndexPage: React.FC<PageProps> = () => {
       <div className="main">
         <header className="top-bar">
           <div className="top-bar-title">VO|D Version 2.0 - Technical display unit</div>
-          <div>(c) 2025 TTOU SYSTEMS</div>
+          <div>© 1984 TTOU SYSTEMS</div>
         </header>
 
         <div className="body-grid">
@@ -99,7 +99,10 @@ const IndexPage: React.FC<PageProps> = () => {
                 </div>
                 <div className="news-list">
                   {newsItems.map((item) => (
-                    <div key={item.label} className="news-row news-row--link">
+                    <div
+                      key={item.label}
+                      className={`news-row news-row--link${item.hidden ? " is-hidden" : ""}`}
+                    >
                       <a
                         className="news-link news-link-row"
                         href={item.href}
@@ -166,7 +169,7 @@ const IndexPage: React.FC<PageProps> = () => {
               </div>
             </section>
 
-            <section className="panel cta" aria-labelledby="cta-title">
+            <section className="panel cta is-hidden" aria-labelledby="cta-title">
               <h2 id="cta-title" className="panel-subtitle">
                 Become The Spectacle
               </h2>
@@ -192,6 +195,8 @@ const IndexPage: React.FC<PageProps> = () => {
               <StaticImage
                 className="hero-img hero-img--base"
                 imgClassName="hero-img__img"
+                style={{ position: "absolute", inset: 0, width: "100%", height: "120%" }}
+                imgStyle={{ objectFit: "cover", objectPosition: "100% 0%" }}
                 loading="eager"
                 placeholder="dominantColor"
                 formats={["auto", "webp", "avif"]}
@@ -201,6 +206,8 @@ const IndexPage: React.FC<PageProps> = () => {
               <StaticImage
                 className="hero-img hero-img--alt"
                 imgClassName="hero-img__img"
+                style={{ position: "absolute", inset: 0, width: "100%", height: "120%" }}
+                imgStyle={{ objectFit: "cover", objectPosition: "100% 0%" }}
                 loading="lazy"
                 placeholder="blurred"
                 formats={["auto", "webp", "avif"]}
