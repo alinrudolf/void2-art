@@ -297,6 +297,15 @@ a {
   margin-bottom: 0;
 }
 
+.panel-list {
+  margin: 16px 0 0;
+  padding-left: 18px;
+}
+
+.panel-list .panel-text:last-of-type {
+  margin-bottom: 0;
+}
+
 .two-up {
   display: flex;
   padding: 0;
@@ -378,6 +387,14 @@ a {
 
 .track-panel {
   border-bottom: none;
+}
+
+.influences-panel {
+  border-bottom: none;
+}
+
+.philosophy-panel {
+  border-top-style: dashed;
 }
 
 .track-table {

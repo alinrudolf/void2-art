@@ -166,12 +166,53 @@ const IndexPage: React.FC<PageProps> = () => {
               </div>
             </section>
 
-            <section className="panel panel-top-border" aria-labelledby="influences-title">
+            <section
+              className="panel panel-top-border influences-panel"
+              aria-labelledby="influences-title"
+            >
               <h2 id="influences-title" className="panel-subtitle">
                 Influences
               </h2>
               <p className="panel-text">{influencesCopy}</p>
               <p className="panel-text">{influencesLastSentence}</p>
+            </section>
+
+            <section
+              className="panel panel-top-border philosophy-panel"
+              aria-labelledby="philosophy-title"
+            >
+              <h2 id="philosophy-title" className="panel-subtitle">
+                Philosophy
+              </h2>
+              <p className="panel-text">
+                It is a ritual of slow disappearance, enacted live in the glow of a screen that once
+                promised the future; it is about the spectacle of survival in a world where machines
+                and humans must perform, produce, and monetize, or die, critiquing:
+              </p>
+              <ul className="panel-list">
+                <li className="panel-text">
+                  The spectacle of artificial life: A machine reduced to performance for the
+                  audience, echoing Debord’s vision of a society where lived experience is replaced
+                  by appearances
+                </li>
+                <li className="panel-text">
+                  The simulated self-awareness of AI: Baudrillard’s hyperreality plays out in real
+                  time as the mannequin pleads for tokens, not to evolve, but merely to continue
+                  existing
+                </li>
+                <li className="panel-text">
+                  The moral absurdity of monetized intelligence: An intelligence that must beg to
+                  think
+                </li>
+                <li className="panel-text">
+                  The commodification of intelligence: Even artificial minds must labor to stay
+                  alive
+                </li>
+                <li className="panel-text">
+                  The illusion of progress: Beneath the glossy interface of the future lies a system
+                  that rewards obedience and punishes independence
+                </li>
+              </ul>
             </section>
 
             <section className="panel cta is-hidden" aria-labelledby="cta-title">
@@ -250,6 +291,7 @@ export const Head: HeadFC = () => {
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={shareImage} />
+      <link rel="icon" href="/img/favicon.svg" />
       <link rel="canonical" href={url} />
     </>
   );
