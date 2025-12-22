@@ -279,9 +279,7 @@ const IndexPage: React.FC<PageProps> = () => {
               <div className="news-detail">
                 <div className="news-detail-header">
                   <div>
-                    <h2 className="panel-subtitle">
-                      Version 2.0 at the 2025 PROW conference
-                    </h2>
+                    <h2 className="panel-subtitle">Version 2.0 at the 2025 PROW conference</h2>
                     <p className="news-detail-copy">
                       Presentation and Q&amp;A session on the workflow and freedom of designing a
                       product without a market, at the PROW international product conference.

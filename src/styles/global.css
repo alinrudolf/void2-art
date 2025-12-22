@@ -234,7 +234,6 @@ a {
   border-top: var(--line-thick) solid var(--border);
 }
 
-
 .panel-news {
   padding-left: 0;
   padding-right: 0;
@@ -771,7 +770,6 @@ a {
   .left-column {
     padding-top: 0;
   }
-
 
   .body-grid {
     grid-template-columns: 1fr;
