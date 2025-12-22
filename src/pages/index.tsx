@@ -1,6 +1,6 @@
 import type { HeadFC, PageProps } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import React from "react";
+import React, { useState } from "react";
 
 const functionalityPoints = [
   "The mannequin will beg for tokens when visitors are registered in its proximity and display a QR code that will redirect the visitor to a payment website for the LLM model.",
@@ -12,6 +12,7 @@ const newsItems = [
   {
     label: "Version 2.0 at the 2025 PROW conference",
     href: "https://www.linkedin.com/posts/prow-conference_empathy-over-attention-thats-the-ugcPost-7389617699309563904-mZSZ",
+    action: "prow",
   },
   { label: "Version 1.0 on builds.gg", href: "https://builds.gg/builds/vo-d-36899" },
   { label: "VOID at Artverse Paris", href: "#", hidden: true },
@@ -55,6 +56,15 @@ const influencesLastSentence =
   "One could argue that we're contemplating trading one dystopic future for another, but at least the fictional one made more sense and looked way better.";
 
 const IndexPage: React.FC<PageProps> = () => {
+  const [activeNews, setActiveNews] = useState<null | "prow">(null);
+  const galleryImages = [
+    { src: "/img/gallery1.jpeg", label: "prow_talk.jpeg", type: "video" as const },
+    { src: "/img/gallery2.jpeg", label: "prow_001.jpeg", type: "image" as const },
+    { src: "/img/gallery3.jpeg", label: "prow_002.jpeg", type: "image" as const },
+    { src: "/img/gallery4.jpeg", label: "prow_003.jpeg", type: "image" as const },
+  ];
+  const [activeGallery, setActiveGallery] = useState(galleryImages[0]);
+
   return (
     <div className="page">
       <aside className="sidebar" aria-label="Void overview">
@@ -64,7 +74,6 @@ const IndexPage: React.FC<PageProps> = () => {
       <div className="main">
         <header className="top-bar">
           <div className="top-bar-title">VO|D Version 2.0 - Technical display unit</div>
-          <div>© 1984 TTOU SYSTEMS</div>
         </header>
 
         <div className="body-grid">
@@ -101,13 +110,27 @@ const IndexPage: React.FC<PageProps> = () => {
                   {newsItems.map((item) => (
                     <div
                       key={item.label}
-                      className={`news-row news-row--link${item.hidden ? " is-hidden" : ""}`}
+                      className={`news-row news-row--link${
+                        item.hidden ? " is-hidden" : ""
+                      }${item.action === "prow" && activeNews === "prow" ? " is-active" : ""}`}
                     >
                       <a
                         className="news-link news-link-row"
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(event) => {
+                          if (item.action === "prow") {
+                            event.preventDefault();
+                            setActiveNews("prow");
+                            if (
+                              typeof window !== "undefined" &&
+                              window.matchMedia("(max-width: 1200px)").matches
+                            ) {
+                              window.scrollTo({ top: 0, behavior: "smooth" });
+                            }
+                          }
+                        }}
                       >
                         <img
                           src="/img/link-simple.svg"
@@ -234,33 +257,103 @@ const IndexPage: React.FC<PageProps> = () => {
                 </button>
               </div>
             </section>
+
+            <section className="panel footer-panel" aria-label="Unit documentation">
+              <div className="footer-row">
+                <div className="footer-logo">
+                  <img src="/img/footer%20logo.svg" alt="TTOU Systems logo" />
+                </div>
+                <div className="footer-copy">
+                  <div className="footer-title">Unit documentation</div>
+                  <div className="footer-meta">© 1984 TTOU SYSTEMS</div>
+                </div>
+              </div>
+            </section>
           </section>
 
-          <section className="right-column" aria-label="Void illustration">
-            <div className="hero">
-              <StaticImage
-                className="hero-img hero-img--base"
-                imgClassName="hero-img__img"
-                style={{ position: "absolute", inset: 0, width: "100%", height: "120%" }}
-                imgStyle={{ objectFit: "cover", objectPosition: "100% 0%" }}
-                loading="eager"
-                placeholder="dominantColor"
-                formats={["auto", "webp", "avif"]}
-                src="../../static/img/void-main-sketch-v2.png"
-                alt="VOID mannequin sketch"
-              />
-              <StaticImage
-                className="hero-img hero-img--alt"
-                imgClassName="hero-img__img"
-                style={{ position: "absolute", inset: 0, width: "100%", height: "120%" }}
-                imgStyle={{ objectFit: "cover", objectPosition: "100% 0%" }}
-                loading="lazy"
-                placeholder="blurred"
-                formats={["auto", "webp", "avif"]}
-                src="../../static/img/void-main-sketch-clean-internals.png"
-                alt="VOID mannequin internals sketch"
-              />
-            </div>
+          <section
+            className={`right-column${activeNews === "prow" ? " is-scrollable" : ""}`}
+            aria-label="Void illustration"
+          >
+            {activeNews === "prow" ? (
+              <div className="news-detail">
+                <div className="news-detail-header">
+                  <div>
+                    <h2 className="panel-subtitle">
+                      Version 2.0 at the 2025 PROW conference
+                    </h2>
+                    <p className="news-detail-copy">
+                      Presentation and Q&amp;A session on the workflow and freedom of designing a
+                      product without a market, at the PROW international product conference.
+                    </p>
+                  </div>
+                  <button
+                    className="news-detail-back"
+                    type="button"
+                    onClick={() => setActiveNews(null)}
+                    aria-label="Back to overview"
+                  >
+                    <img src="/img/x-square.svg" alt="" aria-hidden="true" />
+                  </button>
+                </div>
+                <div className="news-gallery">
+                  <div className="news-gallery-header">Gallery</div>
+                  <div className="news-gallery-hero">
+                    {activeGallery.type === "video" ? (
+                      <iframe
+                        title="PROW conference talk"
+                        src="https://www.youtube.com/embed/4uR-HHke76A?rel=0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <img src={activeGallery.src} alt="PROW conference highlight" />
+                    )}
+                  </div>
+                  <div className="news-gallery-grid">
+                    {galleryImages.map((item) => (
+                      <button
+                        key={item.label}
+                        type="button"
+                        className={`news-gallery-item${
+                          activeGallery.label === item.label ? " is-active" : ""
+                        }`}
+                        onClick={() => setActiveGallery(item)}
+                      >
+                        <img src={item.src} alt="" />
+                        <span className="news-gallery-caption">{item.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="news-detail-spacer" aria-hidden="true" />
+              </div>
+            ) : (
+              <div className="hero">
+                <StaticImage
+                  className="hero-img hero-img--base"
+                  imgClassName="hero-img__img"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "120%" }}
+                  imgStyle={{ objectFit: "cover", objectPosition: "100% 0%" }}
+                  loading="eager"
+                  placeholder="dominantColor"
+                  formats={["auto", "webp", "avif"]}
+                  src="../../static/img/void-main-sketch-v2.png"
+                  alt="VOID mannequin sketch"
+                />
+                <StaticImage
+                  className="hero-img hero-img--alt"
+                  imgClassName="hero-img__img"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "120%" }}
+                  imgStyle={{ objectFit: "cover", objectPosition: "100% 0%" }}
+                  loading="lazy"
+                  placeholder="blurred"
+                  formats={["auto", "webp", "avif"]}
+                  src="../../static/img/void-main-sketch-clean-internals.png"
+                  alt="VOID mannequin internals sketch"
+                />
+              </div>
+            )}
           </section>
         </div>
       </div>
