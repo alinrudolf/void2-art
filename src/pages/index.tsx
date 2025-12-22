@@ -58,7 +58,7 @@ const influencesLastSentence =
 const IndexPage: React.FC<PageProps> = () => {
   const [activeNews, setActiveNews] = useState<null | "prow">(null);
   const galleryImages = [
-    { src: "/img/gallery1.jpeg", label: "prow_talk.jpeg", type: "video" as const },
+    { src: "/img/gallery1.jpeg", label: "prow_talk.mpeg", type: "video" as const },
     { src: "/img/gallery2.jpeg", label: "prow_001.jpeg", type: "image" as const },
     { src: "/img/gallery3.jpeg", label: "prow_002.jpeg", type: "image" as const },
     { src: "/img/gallery4.jpeg", label: "prow_003.jpeg", type: "image" as const },
