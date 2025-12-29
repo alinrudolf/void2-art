@@ -1,6 +1,21 @@
 import type { HeadFC, PageProps } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+
+type NewsAction = "prow" | "builds";
+
+type NewsItem = {
+  label: string;
+  href: string;
+  action?: NewsAction;
+  hidden?: boolean;
+};
+
+type GalleryItem = {
+  src: string;
+  label: string;
+  type: "video" | "image";
+};
 
 const functionalityPoints = [
   "The mannequin will beg for tokens when visitors are registered in its proximity and display a QR code that will redirect the visitor to a payment website for the LLM model.",
@@ -8,13 +23,17 @@ const functionalityPoints = [
   "If the reserve is not replenished and reaches zero, the software the installation runs on will be irreversibly deleted, provoking death.",
 ];
 
-const newsItems = [
+const newsItems: NewsItem[] = [
   {
     label: "Version 2.0 at the 2025 PROW conference",
     href: "https://www.linkedin.com/posts/prow-conference_empathy-over-attention-thats-the-ugcPost-7389617699309563904-mZSZ",
     action: "prow",
   },
-  { label: "Version 1.0 on builds.gg", href: "https://builds.gg/builds/vo-d-36899" },
+  {
+    label: "Version 1.0 on builds.gg",
+    href: "https://builds.gg/builds/vo-d-36899",
+    action: "builds",
+  },
   { label: "VOID at Artverse Paris", href: "#", hidden: true },
 ];
 
@@ -56,14 +75,40 @@ const influencesLastSentence =
   "One could argue that we're contemplating trading one dystopic future for another, but at least the fictional one made more sense and looked way better.";
 
 const IndexPage: React.FC<PageProps> = () => {
-  const [activeNews, setActiveNews] = useState<null | "prow">(null);
-  const galleryImages = [
-    { src: "/img/gallery1.jpeg", label: "prow_talk.mpeg", type: "video" as const },
-    { src: "/img/gallery2.jpeg", label: "prow_001.jpeg", type: "image" as const },
-    { src: "/img/gallery3.jpeg", label: "prow_002.jpeg", type: "image" as const },
-    { src: "/img/gallery4.jpeg", label: "prow_003.jpeg", type: "image" as const },
+  const [activeNews, setActiveNews] = useState<null | NewsAction>(null);
+  const [prowOpenGhost, setProwOpenGhost] = useState<null | {
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    dx: number;
+    dy: number;
+    sx: number;
+    sy: number;
+    closing: boolean;
+  }>(null);
+  const rightColumnRef = useRef<HTMLElement | null>(null);
+  const prowOpenTimerRef = useRef<number | null>(null);
+  const newsIconRectRef = useRef<Record<NewsAction, DOMRect | null>>({
+    prow: null,
+    builds: null,
+  });
+  const prowGalleryImages: GalleryItem[] = [
+    { src: "/img/gallery1.jpeg", label: "prow_talk.mpeg", type: "video" },
+    { src: "/img/gallery2.jpeg", label: "prow_001.jpeg", type: "image" },
+    { src: "/img/gallery3.jpeg", label: "prow_002.jpeg", type: "image" },
+    { src: "/img/gallery4.jpeg", label: "prow_003.jpeg", type: "image" },
   ];
-  const [activeGallery, setActiveGallery] = useState(galleryImages[0]);
+  const buildsGalleryImages: GalleryItem[] = [
+    { src: "/img/v_one1.jpg", label: "v_one1.jpg", type: "image" },
+    { src: "/img/v_one2.jpg", label: "v_one2.jpg", type: "image" },
+    { src: "/img/v_one3.jpg", label: "v_one3.jpg", type: "image" },
+    { src: "/img/v_one4.jpg", label: "v_one4.jpg", type: "image" },
+  ];
+  const [activeProwGallery, setActiveProwGallery] = useState<GalleryItem>(prowGalleryImages[0]);
+  const [activeBuildsGallery, setActiveBuildsGallery] = useState<GalleryItem>(
+    buildsGalleryImages[0]
+  );
 
   return (
     <div className="page">
@@ -96,7 +141,7 @@ const IndexPage: React.FC<PageProps> = () => {
                 </h2>
                 <p className="panel-text">
                   If you experience depression, nihilism or gout during operation, please contact us
-                  at cathode@void.art or apply iodine to the affected area immediately.
+                  via Telex or apply iodine to the affected area immediately.
                 </p>
               </section>
 
@@ -112,7 +157,7 @@ const IndexPage: React.FC<PageProps> = () => {
                       key={item.label}
                       className={`news-row news-row--link${
                         item.hidden ? " is-hidden" : ""
-                      }${item.action === "prow" && activeNews === "prow" ? " is-active" : ""}`}
+                      }${item.action && activeNews === item.action ? " is-active" : ""}`}
                     >
                       <a
                         className="news-link news-link-row"
@@ -120,9 +165,45 @@ const IndexPage: React.FC<PageProps> = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(event) => {
-                          if (item.action === "prow") {
+                          if (item.action === "prow" || item.action === "builds") {
                             event.preventDefault();
-                            setActiveNews("prow");
+                            const action = item.action;
+                            if (prowOpenTimerRef.current) {
+                              window.clearTimeout(prowOpenTimerRef.current);
+                              prowOpenTimerRef.current = null;
+                            }
+                            const icon = event.currentTarget.querySelector(
+                              ".news-link-icon"
+                            ) as HTMLElement | null;
+                            const sourceRect =
+                              icon?.getBoundingClientRect() ??
+                              event.currentTarget.getBoundingClientRect();
+                            newsIconRectRef.current[item.action] = sourceRect;
+                            const targetRect = rightColumnRef.current?.getBoundingClientRect();
+                            if (targetRect?.width && targetRect?.height) {
+                              const dx = sourceRect.left - targetRect.left;
+                              const dy = sourceRect.top - targetRect.top;
+                              const sx = sourceRect.width / targetRect.width;
+                              const sy = sourceRect.height / targetRect.height;
+                              setProwOpenGhost({
+                                left: targetRect.left,
+                                top: targetRect.top,
+                                width: targetRect.width,
+                                height: targetRect.height,
+                                dx,
+                                dy,
+                                sx: Number.isFinite(sx) ? sx : 1,
+                                sy: Number.isFinite(sy) ? sy : 1,
+                                closing: false,
+                              });
+                              prowOpenTimerRef.current = window.setTimeout(() => {
+                                setProwOpenGhost(null);
+                                setActiveNews(action);
+                                prowOpenTimerRef.current = null;
+                              }, 360);
+                            } else {
+                              setActiveNews(action);
+                            }
                             if (
                               typeof window !== "undefined" &&
                               window.matchMedia("(max-width: 1200px)").matches
@@ -272,23 +353,67 @@ const IndexPage: React.FC<PageProps> = () => {
           </section>
 
           <section
-            className={`right-column${activeNews === "prow" ? " is-scrollable" : ""}`}
+            className={`right-column${activeNews ? " is-scrollable" : ""}`}
             aria-label="Void illustration"
+            ref={rightColumnRef}
           >
-            {activeNews === "prow" ? (
+            {activeNews === "prow" || activeNews === "builds" ? (
               <div className="news-detail">
                 <div className="news-detail-header">
                   <div>
-                    <h2 className="panel-subtitle">Version 2.0 at the 2025 PROW conference</h2>
-                    <p className="news-detail-copy">
-                      Presentation and Q&amp;A session on the workflow and freedom of designing a
-                      product without a market, at the PROW international product conference.
-                    </p>
+                    {activeNews === "prow" ? (
+                      <>
+                        <h2 className="panel-subtitle">Version 2.0 at the 2025 PROW conference</h2>
+                        <p className="news-detail-copy">
+                          Presentation and Q&amp;A session on the workflow and freedom of designing
+                          a product without a market, at the PROW international product conference.
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <h2 className="panel-subtitle">Version 1.0 on builds.gg</h2>
+                        <p className="news-detail-copy">
+                          The first version of the build had solely a monitor functionality with no
+                          other intrinsic software features.
+                        </p>
+                      </>
+                    )}
                   </div>
                   <button
                     className="news-detail-back"
                     type="button"
-                    onClick={() => setActiveNews(null)}
+                    onClick={() => {
+                      if (prowOpenTimerRef.current) {
+                        window.clearTimeout(prowOpenTimerRef.current);
+                        prowOpenTimerRef.current = null;
+                      }
+                      const sourceRect = activeNews ? newsIconRectRef.current[activeNews] : null;
+                      const targetRect = rightColumnRef.current?.getBoundingClientRect();
+                      if (sourceRect && targetRect?.width && targetRect?.height) {
+                        const dx = sourceRect.left - targetRect.left;
+                        const dy = sourceRect.top - targetRect.top;
+                        const sx = sourceRect.width / targetRect.width;
+                        const sy = sourceRect.height / targetRect.height;
+                        setProwOpenGhost({
+                          left: targetRect.left,
+                          top: targetRect.top,
+                          width: targetRect.width,
+                          height: targetRect.height,
+                          dx,
+                          dy,
+                          sx: Number.isFinite(sx) ? sx : 1,
+                          sy: Number.isFinite(sy) ? sy : 1,
+                          closing: true,
+                        });
+                        prowOpenTimerRef.current = window.setTimeout(() => {
+                          setProwOpenGhost(null);
+                          setActiveNews(null);
+                          prowOpenTimerRef.current = null;
+                        }, 360);
+                      } else {
+                        setActiveNews(null);
+                      }
+                    }}
                     aria-label="Back to overview"
                   >
                     <img src="/img/x-square.svg" alt="" aria-hidden="true" />
@@ -297,7 +422,8 @@ const IndexPage: React.FC<PageProps> = () => {
                 <div className="news-gallery">
                   <div className="news-gallery-header">Gallery</div>
                   <div className="news-gallery-hero">
-                    {activeGallery.type === "video" ? (
+                    {(activeNews === "prow" ? activeProwGallery : activeBuildsGallery).type ===
+                    "video" ? (
                       <iframe
                         title="PROW conference talk"
                         src="https://www.youtube.com/embed/4uR-HHke76A?rel=0"
@@ -305,25 +431,58 @@ const IndexPage: React.FC<PageProps> = () => {
                         allowFullScreen
                       />
                     ) : (
-                      <img src={activeGallery.src} alt="PROW conference highlight" />
+                      <img
+                        src={
+                          activeNews === "prow" ? activeProwGallery.src : activeBuildsGallery.src
+                        }
+                        alt={
+                          activeNews === "prow"
+                            ? "PROW conference highlight"
+                            : "VOID version 1.0 highlight"
+                        }
+                      />
                     )}
                   </div>
                   <div className="news-gallery-grid">
-                    {galleryImages.map((item) => (
-                      <button
-                        key={item.label}
-                        type="button"
-                        className={`news-gallery-item${
-                          activeGallery.label === item.label ? " is-active" : ""
-                        }`}
-                        onClick={() => setActiveGallery(item)}
-                      >
-                        <img src={item.src} alt="" />
-                        <span className="news-gallery-caption">{item.label}</span>
-                      </button>
-                    ))}
+                    {(activeNews === "prow" ? prowGalleryImages : buildsGalleryImages).map(
+                      (item) => (
+                        <button
+                          key={item.label}
+                          type="button"
+                          className={`news-gallery-item${
+                            (
+                              activeNews === "prow"
+                                ? activeProwGallery.label
+                                : activeBuildsGallery.label
+                            ) === item.label
+                              ? " is-active"
+                              : ""
+                          }`}
+                          onClick={() => {
+                            if (activeNews === "prow") {
+                              setActiveProwGallery(item);
+                            } else {
+                              setActiveBuildsGallery(item);
+                            }
+                          }}
+                        >
+                          <img src={item.src} alt="" />
+                          <span className="news-gallery-caption">{item.label}</span>
+                        </button>
+                      )
+                    )}
                   </div>
                 </div>
+                {activeNews === "builds" ? (
+                  <a
+                    className="news-detail-cta"
+                    href="https://builds.gg/builds/vo-d-36899"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View on builds.gg
+                  </a>
+                ) : null}
                 <div className="news-detail-spacer" aria-hidden="true" />
               </div>
             ) : (
@@ -354,6 +513,24 @@ const IndexPage: React.FC<PageProps> = () => {
             )}
           </section>
         </div>
+
+        {prowOpenGhost ? (
+          <div
+            className={`prow-open-ghost${prowOpenGhost.closing ? " is-closing" : ""}`}
+            style={
+              {
+                left: `${prowOpenGhost.left}px`,
+                top: `${prowOpenGhost.top}px`,
+                width: `${prowOpenGhost.width}px`,
+                height: `${prowOpenGhost.height}px`,
+                "--prow-dx": `${prowOpenGhost.dx}px`,
+                "--prow-dy": `${prowOpenGhost.dy}px`,
+                "--prow-sx": String(prowOpenGhost.sx),
+                "--prow-sy": String(prowOpenGhost.sy),
+              } as React.CSSProperties
+            }
+          />
+        ) : null}
       </div>
     </div>
   );
