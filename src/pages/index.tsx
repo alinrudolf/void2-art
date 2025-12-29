@@ -543,7 +543,7 @@ export const Head: HeadFC = () => {
   const description =
     "VOID technical display unit - functionality, warnings, news, and contact for TTOU Systems.";
   const url = "https://void2.art/";
-  const shareImage = "https://void2.art/img/void-main-sketch-v2.png";
+  const shareImage = "https://void2.art/img/VOID%20OG.png";
 
   return (
     <>
