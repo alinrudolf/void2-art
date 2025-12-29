@@ -560,6 +560,13 @@ export const Head: HeadFC = () => {
       <meta name="twitter:image" content={shareImage} />
       <link rel="icon" href="/img/favicon.svg" />
       <link rel="canonical" href={url} />
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRS9CRV55G" />
+      <script>{`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-ZRS9CRV55G');
+      `}</script>
     </>
   );
 };
