@@ -540,8 +540,7 @@ export default IndexPage;
 
 export const Head: HeadFC = () => {
   const title = "VOID Overview";
-  const description =
-    "VOID technical display unit - functionality, warnings, news, and contact for TTOU Systems.";
+  const description = "Autonomous existential dread installation";
   const url = "https://void2.art/";
   const shareImage = "https://void2.art/img/VOID%20OG.png";
 
