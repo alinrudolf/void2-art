@@ -43,7 +43,7 @@ const trackPlatforms = [
     icon: "/img/gg-logo-2.png",
     description: "Showcase network for PC builds",
     linkLabel: "www.builds.gg",
-    href: "https://www.builds.gg",
+    href: "https://builds.gg/void",
   },
   {
     name: "LinkedIn",
@@ -57,14 +57,14 @@ const trackPlatforms = [
     icon: "/img/youtube-logo.svg",
     description: "Video sharing and streaming network",
     linkLabel: "www.youtube.com",
-    href: "https://www.youtube.com",
+    href: "https://www.youtube.com/@VOID-twopointo",
   },
   {
     name: "/'eks/",
     icon: "/img/x-logo.svg",
     description: "Used to be Twitter",
     linkLabel: "www.x.com",
-    href: "https://www.x.com",
+    href: "https://x.com/IosaAlin",
   },
 ];
 
